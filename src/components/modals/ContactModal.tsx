@@ -11,6 +11,7 @@ interface ContactModalProps {
 const ContactModal = ({ contact, onClose, onSave, onDelete }: ContactModalProps) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedContact, setEditedContact] = useState<Contact>({ ...contact });
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setEditedContact(prev => ({ ...prev, [name]: value }));
@@ -18,6 +19,7 @@ const ContactModal = ({ contact, onClose, onSave, onDelete }: ContactModalProps)
 
     const handleSave = () => {
         onSave(editedContact);
+
         setIsEditing(false);
     };
 
@@ -103,7 +105,7 @@ const ContactModal = ({ contact, onClose, onSave, onDelete }: ContactModalProps)
                         ) : (
                             <>
                                 <button
-                                    onClick={() => onDelete(contact.id)}
+                                    onClick={() => { onDelete(contact.id), onClose() }}
                                     className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
                                 >
                                     Remover

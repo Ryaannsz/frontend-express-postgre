@@ -15,12 +15,12 @@ const ContactsPage = () => {
     const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
+
     const { mutate: deleteContact } = useDeleteContact()
 
     const { mutate: updateContact } = useEditContact();
 
     const { data: contactsHook, isPending } = useContactsByUserId()
-    console.log(contactsHook)
 
 
     useEffect(() => {
@@ -36,12 +36,8 @@ const ContactsPage = () => {
 
 
     // Função para adicionar novo contato
-    const handleAddContact = (newContact: Omit<Contact, 'id'>) => {
-        setContacts([...contacts, {
-            ...newContact,
-            id: (contacts.length + 1).toString()
-        }]);
-        setIsAddModalOpen(false);
+    const handleAddContact = () => {
+        window.location.reload()
     };
 
     // Função para atualizar contato
@@ -55,6 +51,8 @@ const ContactsPage = () => {
 
     // Função para remover contato
     const handleDeleteContact = (id: string) => {
+        const novosContatos = contacts.filter((item) => item.id != id);
+        setContacts(novosContatos)
         deleteContact(id);
     };
 
@@ -101,7 +99,7 @@ const ContactsPage = () => {
                 {selectedContact && (
                     <ContactModal
                         contact={selectedContact}
-                        onClose={() => setSelectedContact(null)}
+                        onClose={() => { setSelectedContact(null) }}
                         onSave={handleUpdateContact}
                         onDelete={handleDeleteContact}
                     />

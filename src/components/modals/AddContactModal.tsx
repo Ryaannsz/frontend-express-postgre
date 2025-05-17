@@ -5,7 +5,7 @@ import { getUserIdFromToken } from '../../utils/auth';
 
 interface AddContactModalProps {
     onClose: () => void;
-    onSave: (contact: Omit<Contact, 'id'>) => void;
+    onSave: (contact: Contact) => void;
 }
 
 
@@ -45,13 +45,12 @@ const AddContactModal = ({ onClose, onSave }: AddContactModalProps) => {
         e.preventDefault();
         mutate(newContact, {
             onSuccess: (data) => {
-                console.log(data)
-                onSave(newContact); // opcional: se quiser atualizar a lista local
-                onClose();          // fecha o modal
+                console.log(data);
+                onSave(data); // <-- passa o contato completo com ID
+                onClose();
             },
             onError: (error) => {
                 console.error("Erro ao adicionar contato:", error);
-                // você pode exibir um erro na UI também, se quiser
             }
         });
     };
