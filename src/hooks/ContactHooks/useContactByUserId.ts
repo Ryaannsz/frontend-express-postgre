@@ -17,7 +17,7 @@ export function useContactsByUserId() {
     const query = useQuery({
         queryKey: ['contact-userid-data'],
         queryFn: fetch,
-        retry: 2,
+        retry: 1,
     });
 
     return {

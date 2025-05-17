@@ -20,11 +20,15 @@ const ContactsPage = () => {
     const { mutate: updateContact } = useEditContact();
 
     const { data: contactsHook, isPending } = useContactsByUserId()
+    console.log(contactsHook)
 
 
     useEffect(() => {
         if (contactsHook) {
             setContacts(contactsHook);
+        }
+        if (contactsHook?.length == 0) {
+            setContacts([])
         }
     }, [contactsHook])
 

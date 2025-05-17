@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRegisterMutate } from '../hooks/AuthHooks/useRegister';
 import { useLoginMutate } from '../hooks/AuthHooks/useLogin';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +17,12 @@ export default function AuthPage() {
 
   const { mutate: registro, isError: isErrorRegiser, isSuccess: isSuccessRegister, isPending: isPedingRegister } = useRegisterMutate();
   const { mutate: login, isError: isErrorLogin, isSuccess: isSuccessLogin, isPending: isPedingLogin } = useLoginMutate();
+
+  useEffect(() => {
+    if (isSuccessLogin) {
+      navigate('/contatos');
+    }
+  }, [isSuccessLogin, navigate]);
 
   const isPasswordValid = (password: string): boolean => {
     const minLength = 8;
@@ -52,7 +58,6 @@ export default function AuthPage() {
 
     if (isLogin) {
       login(formData);
-      navigate('/contatos')
     } else {
       registro(formData);
     }
