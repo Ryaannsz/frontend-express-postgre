@@ -6,6 +6,8 @@ import type { Contact } from '../interface/Contact';
 import { useContactsByUserId } from '../hooks/ContactHooks/useContactByUserId';
 import { useDeleteContact } from '../hooks/ContactHooks/useContactDelete';
 import { useEditContact } from '../hooks/ContactHooks/useContactEdit';
+import LoadingPage from '../components/loading/LoadingPage';
+import LogoutButton from '../components/logout/LogoutButton';
 
 const ContactsPage = () => {
     // Estado inicial vazio conforme a interface
@@ -17,13 +19,17 @@ const ContactsPage = () => {
 
     const { mutate: updateContact } = useEditContact();
 
-    const { data: contactsHook } = useContactsByUserId()
+    const { data: contactsHook, isPending } = useContactsByUserId()
+
 
     useEffect(() => {
         if (contactsHook) {
             setContacts(contactsHook);
         }
     }, [contactsHook])
+
+
+
 
     // Função para adicionar novo contato
     const handleAddContact = (newContact: Omit<Contact, 'id'>) => {
@@ -48,6 +54,10 @@ const ContactsPage = () => {
         deleteContact(id);
     };
 
+
+    if (isPending)
+        return <LoadingPage />
+
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
@@ -59,6 +69,7 @@ const ContactsPage = () => {
                     >
                         + Novo Contato
                     </button>
+                    <LogoutButton />
                 </div>
 
                 {contacts.length === 0 ? (

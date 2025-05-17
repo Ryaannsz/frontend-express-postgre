@@ -35,3 +35,8 @@ export const getUserIdFromToken = (): string | null => {
     const decoded = decodeToken();
     return decoded?.userId || null;
 };
+
+export function isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token;
+}

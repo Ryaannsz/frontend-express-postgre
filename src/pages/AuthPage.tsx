@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRegisterMutate } from '../hooks/AuthHooks/useRegister';
 import { useLoginMutate } from '../hooks/AuthHooks/useLogin';
+import { useNavigate } from 'react-router-dom';
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -9,6 +10,8 @@ export default function AuthPage() {
     email: '',
     password: ''
   });
+
+  const navigate = useNavigate();
 
   const [passwordError, setPasswordError] = useState<string>(''); // Novo estado para a senha
 
@@ -49,6 +52,7 @@ export default function AuthPage() {
 
     if (isLogin) {
       login(formData);
+      navigate('/contatos')
     } else {
       registro(formData);
     }
@@ -75,7 +79,7 @@ export default function AuthPage() {
                     id="name"
                     name="name"
                     type="text"
-                    required
+                    required={!isLogin}
                     value={formData.name}
                     onChange={handleChange}
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
