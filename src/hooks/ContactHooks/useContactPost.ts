@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import API_URL from "../../constants/AppConstants";
 import type { Contact } from "../../interface/Contact";
-import { getUserIdFromToken } from "../../utils/auth"; // Verifique se esse método já está implementado corretamente
 
 export function useAddContact() {
     return useMutation({

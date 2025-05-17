@@ -33,7 +33,7 @@ const AddContactModal = ({ onClose, onSave }: AddContactModalProps) => {
         }
     }, [userId]);
 
-    const { mutate, isPending, isError } = useAddContact();
+    const { mutate } = useAddContact();
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +45,7 @@ const AddContactModal = ({ onClose, onSave }: AddContactModalProps) => {
         e.preventDefault();
         mutate(newContact, {
             onSuccess: (data) => {
+                console.log(data)
                 onSave(newContact); // opcional: se quiser atualizar a lista local
                 onClose();          // fecha o modal
             },
