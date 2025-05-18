@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import API_URL from "../../constants/AppConstants";
 import type { Contact } from "../../interface/Contact";
+import { showToast } from "../../components/toast/Toast";
 
 export function useAddContact() {
     return useMutation({
@@ -15,6 +16,10 @@ export function useAddContact() {
             });
 
             return response.data;
-        },
+        }, onSuccess: () => {
+            showToast("Contato adicionado com sucesso!", "success")
+        }, onError: () => {
+            showToast("Erro ao adicionar o contato!", "error")
+        }
     });
 }

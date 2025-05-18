@@ -6,37 +6,42 @@ import ProtectedRoute from './components/protectedRoute/ProtectedRoute'
 import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
 import { isAuthenticated } from './utils/auth';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   return (
-    <Routes>
-      {/* Redirecionamento da raiz */}
-      <Route
-        path="/"
-        element={
-          isAuthenticated() ? <Navigate to="/contatos" replace /> : <Navigate to="/auth" replace />
-        }
-      />
+    <>
+      <Routes>
+        {/* Redirecionamento da raiz */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated() ? <Navigate to="/contatos" replace /> : <Navigate to="/auth" replace />
+          }
+        />
 
-      {/* Página pública */}
-      <Route path="/auth" element={<AuthPage />} />
+        {/* Página pública */}
+        <Route path="/auth" element={<AuthPage />} />
 
-      {/* Página protegida */}
-      <Route
-        path="/contatos"
-        element={
-          <ProtectedRoute>
-            <div className="flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-grow">
-                <ContactsPage />
-              </main>
-              <Footer />
-            </div>
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
+        {/* Página protegida */}
+        <Route
+          path="/contatos"
+          element={
+            <ProtectedRoute>
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-grow">
+                  <ContactsPage />
+                </main>
+                <Footer />
+              </div>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <ToastContainer />
+    </>
   );
 }
 
