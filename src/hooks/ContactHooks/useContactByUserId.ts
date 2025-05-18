@@ -2,6 +2,7 @@ import axios, { type AxiosPromise } from "axios";
 import type { Contact } from "../../interface/Contact";
 import { useQuery } from "@tanstack/react-query";
 import API_URL from "../../constants/AppConstants";
+import { getUserIdFromToken } from "../../utils/auth";
 
 const fetch = async (): AxiosPromise<Contact[]> => {
     const token = localStorage.getItem("token");
@@ -10,12 +11,14 @@ const fetch = async (): AxiosPromise<Contact[]> => {
             Authorization: `Bearer ${token}`,
         },
     });
+
     return response;
 };
 
 export function useContactsByUserId() {
+    const userId = getUserIdFromToken();
     const query = useQuery({
-        queryKey: ['contact-userid-data'],
+        queryKey: ['contact-userid-data', userId],
         queryFn: fetch,
         retry: 1,
     });

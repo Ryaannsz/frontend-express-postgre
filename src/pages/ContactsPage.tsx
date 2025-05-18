@@ -31,6 +31,7 @@ const ContactsPage = () => {
             setContacts([])
         }
     }, [contactsHook])
+    console.log(contacts)
 
 
 

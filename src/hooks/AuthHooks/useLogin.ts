@@ -1,8 +1,10 @@
 import axios from "axios";
 import API_URL from "../../constants/AppConstants";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Login } from "../../interface/Login";
 import { showToast } from "../../components/toast/Toast";
+
+
 
 interface LoginResponse {
     token: string;
@@ -14,6 +16,7 @@ const postLogin = async (data: Login): Promise<LoginResponse> => {
 };
 
 export function useLoginMutate() {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: postLogin,
         retry: 2,
@@ -21,6 +24,9 @@ export function useLoginMutate() {
             localStorage.setItem("token", data.token); // agora isso funciona
             console.log("Login bem-sucedido!");
             showToast("Usuário logado com sucesso!", "success")
+
+            queryClient.removeQueries({ queryKey: ['contact-userid-data'] });
+
         },
         onError: (error) => {
             showToast("E-mail ou senha inválidos!", "error")

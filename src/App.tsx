@@ -13,7 +13,6 @@ function App() {
   return (
     <>
       <Routes>
-        {/* Redirecionamento da raiz */}
         <Route
           path="/"
           element={
@@ -21,10 +20,8 @@ function App() {
           }
         />
 
-        {/* Página pública */}
         <Route path="/auth" element={<AuthPage />} />
 
-        {/* Página protegida */}
         <Route
           path="/contatos"
           element={

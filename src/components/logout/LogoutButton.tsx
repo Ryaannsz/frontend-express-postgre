@@ -1,11 +1,13 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 const LogoutButton = () => {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-
+        queryClient.removeQueries({ queryKey: ['contact-userid-data'] });
         navigate('/auth');
     };
 
